@@ -9,6 +9,7 @@ import * as routes from "../../constants/routes";
 import { ApplyPage } from "../ApplyPage";
 import LandingPage from "../LandingPage";
 import NotFoundPage from "../NotFoundPage";
+import { ResultPage } from "../ResultPage";
 import Header from "./Header";
 
 const styles = theme => ({
@@ -46,6 +47,7 @@ const App = props => (
             path={routes.INTERVIEWER}
             component={LandingPage}
           />
+          <Route exact={true} path={routes.RESULT} component={ResultPage} />
           <Route exact={true} path={routes.APPLY} component={ApplyPage} />
           <Route component={NotFoundPage} />
         </Switch>
