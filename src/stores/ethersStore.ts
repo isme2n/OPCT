@@ -19,13 +19,22 @@ class EthersStore {
   public opct;
   @observable
   public signer;
+  @observable
+  public accounts: string[] = [];
 
   constructor(rootStore) {
     this.rootStore = rootStore;
     this.setEthers();
     this.setWeb3();
     this.setProvider();
+    this.setListener();
   }
+
+  private setListener = () => {
+    this.web3.on("block", res => {
+      this.setSigner();
+    });
+  };
 
   @action
   private setWeb3 = () => {
@@ -38,10 +47,14 @@ class EthersStore {
     this.setSigner();
   };
 
+  @action
   private setSigner = async () => {
-    await this.web3.listAccounts().then(accounts => {
-      this.signer = this.web3.getSigner();
-    });
+    await this.web3.listAccounts().then(
+      action((accounts: string[]) => {
+        this.accounts = accounts;
+        this.signer = this.web3.getSigner(accounts[0]);
+      })
+    );
     this.setOpct();
   };
 

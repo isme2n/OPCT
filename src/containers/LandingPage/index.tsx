@@ -6,9 +6,12 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import { inject, observer } from "mobx-react";
 
 import * as BG from "../../images/BG.png";
-import * as bitmap from "../../images/Bitmap.png";
 import * as blockchain from "../../images/Blockchain.png";
 import * as feasibility from "../../images/feasibility.png";
+import * as group10 from "../../images/group-10.png";
+import * as group2 from "../../images/group-2.png";
+import * as group3 from "../../images/group-3.png";
+import * as group5 from "../../images/group-5.png";
 import * as handshake from "../../images/handshake.png";
 import * as meditation from "../../images/meditation.png";
 import * as value from "../../images/value.png";
@@ -143,8 +146,11 @@ const styles = {
   contentsPin: {
     width: 248,
     height: 208,
-    margin: 10,
-    backgroundImage: `url(${bitmap})`,
+    margin: 10
+  },
+  pinImage: {
+    width: 248,
+    backgroundImage: `url(${group2})`,
     backgroundSize: "cover"
   },
   thirdContents: {
@@ -182,6 +188,10 @@ const styles = {
     letterSpacing: "normal" as "normal",
     color: "#171c34",
     textAlign: "center" as "center"
+  },
+  text: {
+    marginLeft: "-28px",
+    color: "#919aa3"
   }
 };
 
@@ -280,10 +290,50 @@ class LandingPage extends React.Component<LandingPageProps> {
                 pretium pretium tempor.
               </div>
               <div style={styles.inContentsBody}>
-                <div style={styles.contentsPin} />
-                <div style={styles.contentsPin} />
-                <div style={styles.contentsPin} />
-                <div style={styles.contentsPin} />
+                <div style={styles.contentsPin}>
+                  <img src={group2} style={styles.pinImage} />
+                  <Typography
+                    gutterBottom={true}
+                    variant="headline"
+                    component="h2"
+                    style={styles.text}
+                  >
+                    Apply
+                  </Typography>
+                </div>
+                <div style={styles.contentsPin}>
+                  <img src={group3} style={styles.pinImage} />
+                  <Typography
+                    gutterBottom={true}
+                    variant="headline"
+                    component="h2"
+                    style={styles.text}
+                  >
+                    Test&Interview
+                  </Typography>
+                </div>
+                <div style={styles.contentsPin}>
+                  <img src={group5} style={styles.pinImage} />
+                  <Typography
+                    gutterBottom={true}
+                    variant="headline"
+                    component="h2"
+                    style={styles.text}
+                  >
+                    Blockchain stored
+                  </Typography>
+                </div>
+                <div style={styles.contentsPin}>
+                  <img src={group10} style={styles.pinImage} />
+                  <Typography
+                    gutterBottom={true}
+                    variant="headline"
+                    component="h2"
+                    style={styles.text}
+                  >
+                    Check the result
+                  </Typography>
+                </div>
               </div>
             </div>
           </div>

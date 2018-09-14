@@ -100,6 +100,8 @@ export class ResultPage extends React.Component<ResultPageProps> {
               value={this.name}
               onChange={this.changeAddress}
             />
+          </div>
+          <div>
             <TextField
               style={styles.textField}
               label="Check Round"

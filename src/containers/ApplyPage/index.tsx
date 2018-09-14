@@ -48,11 +48,17 @@ const styles = {
     color: "#b1b8bf",
     margin: 0
   },
+  status: {},
   content: {
     margin: 10,
     display: "relative",
     width: "100%",
     textAlign: "center" as "center"
+  },
+  button: {
+    margin: 10,
+    backgroundColor: "#0074e4",
+    color: "#fff"
   }
 };
 
@@ -84,39 +90,42 @@ export class ApplyPage extends React.Component<ApplyPageProps> {
           </div>
         </div>
         <div style={styles.content}>
+          <div style={styles.status}>{this.status()}</div>
           <div>
-            <TextField
-              label="name"
-              value={this.name}
-              onChange={this.changeName}
-            />
+            <TextField label="name" onChange={this.changeName} />
           </div>
           <div>
-            <TextField
-              label="birth"
-              value={this.birth}
-              onChange={this.changeBirth}
-            />
+            <TextField label="birth" onChange={this.changeBirth} />
           </div>
           <div>
-            <TextField
-              label="pincode"
-              value={this.pincode}
-              onChange={this.changePincode}
-            />
+            <TextField label="pincode" onChange={this.changePincode} />
           </div>
           <div>
-            <TextField
-              label="portfolio"
-              value={this.portfolio}
-              onChange={this.changePortfolio}
-            />
+            <TextField label="portfolio" onChange={this.changePortfolio} />
           </div>
-          <Button onClick={this.sendApply}>send</Button>
+          <Button
+            variant="contained"
+            style={styles.button}
+            onClick={this.sendApply}
+          >
+            send
+          </Button>
         </div>
       </div>
     );
   }
+
+  private status = () => {
+    const { ethersStore } = this.props;
+
+    if (!ethersStore.web3) {
+      return "no Web3";
+    } else if (!(ethersStore.accounts.length > 0)) {
+      return "can't detected Accounts. Please Logging into Metamask";
+    } else {
+      return "fine";
+    }
+  };
 
   @action
   private changeName = e => {
@@ -135,8 +144,16 @@ export class ApplyPage extends React.Component<ApplyPageProps> {
     this.portfolio = e.target.value;
   };
 
-  private sendApply = () => {
+  private sendApply = async () => {
     const { opct } = this.props.ethersStore;
-    opct.SetApplicant(this.name, this.birth, this.pincode, this.portfolio);
+    try {
+      await opct
+        .SetApplicant(this.name, this.birth, this.pincode, this.portfolio)
+        .then(res => {
+          console.log(res);
+        });
+    } catch (err) {
+      alert(err);
+    }
   };
 }
