@@ -17,13 +17,14 @@ class EthersStore {
 
   @observable
   public opct;
+  @observable
+  public signer;
 
   constructor(rootStore) {
     this.rootStore = rootStore;
     this.setEthers();
     this.setWeb3();
     this.setProvider();
-    this.setOpct();
   }
 
   @action
@@ -34,6 +35,14 @@ class EthersStore {
       window["web3"].currentProvider,
       network
     );
+    this.setSigner();
+  };
+
+  private setSigner = async () => {
+    await this.web3.listAccounts().then(accounts => {
+      this.signer = this.web3.getSigner();
+    });
+    this.setOpct();
   };
 
   @action
@@ -50,7 +59,7 @@ class EthersStore {
   private setOpct = () => {
     const address = "0xd57c9Bc8Bb17cbD5c385b02F715A497d6f69f324";
 
-    this.opct = new ethers.Contract(address, opctAbi, this.web3);
+    this.opct = new ethers.Contract(address, opctAbi, this.signer);
   };
 }
 
