@@ -11,6 +11,7 @@ import { inject, observer } from "mobx-react";
 import * as BG from "../../images/BG.png";
 import * as FAILE from "../../images/Fail.jpg";
 import * as SUCCESS from "../../images/Hycon.jpg";
+import * as DEFAULT from "../../images/HyconHacks.jpg";
 
 const styles = {
   hero: {
@@ -70,13 +71,15 @@ const styles = {
   resultImg: {
     width: "500px",
     height: "230px",
-    marginTop: 30,
-    marginLeft: 590,
+    marginTop: 18,
+    marginLeft: 678,
     borderRadius: 30,
     display: "flex",
     background:
       "linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5))",
-    backgroundImage: `url(${BG})`,
+    backgroundImage: `url(${DEFAULT})`,
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
     class: "center"
   },
 
@@ -181,7 +184,9 @@ export class ResultPage extends React.Component<ResultPageProps> {
   }
 
   private status = () => {
-    if (this.successorfailure) {
+    if (this.successorfailure === undefined) {
+      return styles.resultImg;
+    } else if (this.successorfailure) {
       return styles.successImg;
     } else {
       return styles.failImg;
