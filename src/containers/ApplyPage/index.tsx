@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { Button, TextField, Typography } from "@material-ui/core";
-
+import * as CryptoJS from "crypto-js";
 import { action, observable } from "mobx";
 import { inject, observer } from "mobx-react";
 
@@ -113,10 +113,14 @@ export class ApplyPage extends React.Component<ApplyPageProps> {
                 />
               </div>
               <div>
+                {this.setPinCode()}
                 <TextField
                   style={styles.textField}
                   label="pincode"
-                  onChange={this.changePincode}
+                  defaultValue={this.pincode}
+                  InputProps={{
+                    readOnly: true
+                  }}
                 />
               </div>
               <div>
@@ -145,6 +149,11 @@ export class ApplyPage extends React.Component<ApplyPageProps> {
   }
 
   @action
+  private setPinCode = () => {
+    this.pincode = (Math.random() * 10000).toFixed(0);
+  };
+
+  @action
   private status = () => {
     const { ethersStore } = this.props;
 
@@ -169,16 +178,15 @@ export class ApplyPage extends React.Component<ApplyPageProps> {
     this.birth = e.target.value;
   };
   @action
-  private changePincode = e => {
-    this.pincode = e.target.value;
-  };
-  @action
   private changePortfolio = e => {
     this.portfolio = e.target.value;
   };
 
   private sendApply = async () => {
     const { opct } = this.props.ethersStore;
+
+    this.convertCypto();
+
     try {
       await opct
         .SetApplicant(this.name, this.birth, this.pincode, this.portfolio)
@@ -189,4 +197,14 @@ export class ApplyPage extends React.Component<ApplyPageProps> {
       alert(err);
     }
   };
+
+  @action
+  private convertCypto() {
+    // Encrypt
+    this.name = CryptoJS.AES.encrypt(this.name, this.pincode);
+    this.birth = CryptoJS.AES.encrypt(this.birth, this.pincode);
+    this.portfolio = CryptoJS.AES.encrypt(this.portfolio, this.pincode);
+
+    console.log(this.name);
+  }
 }
