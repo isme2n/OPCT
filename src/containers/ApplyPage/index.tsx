@@ -185,28 +185,32 @@ export class ApplyPage extends React.Component<ApplyPageProps> {
   };
 
   private sendApply = async () => {
-    const { opct } = this.props.ethersStore;
-
     this.convertCypto();
+  };
+
+  @action
+  private convertCypto = async () => {
+    const { opct } = this.props.ethersStore;
+    // Encrypt
+    const encName = CryptoJS.AES.encrypt(this.name, this.pincode);
+    const encBirth = CryptoJS.AES.encrypt(this.birth, this.pincode);
+    const encPortfolio = CryptoJS.AES.encrypt(this.portfolio, this.pincode);
 
     try {
       await opct
-        .SetApplicant(this.name, this.birth, this.pincode, this.portfolio)
+        .SetApplicant(
+          encName.toString(),
+          encBirth.toString(),
+          this.pincode,
+          encPortfolio.toString()
+        )
         .then(res => {
           console.log(res);
         });
     } catch (err) {
       alert(err);
     }
-  };
-
-  @action
-  private convertCypto() {
-    // Encrypt
-    this.name = CryptoJS.AES.encrypt(this.name, this.pincode);
-    this.birth = CryptoJS.AES.encrypt(this.birth, this.pincode);
-    this.portfolio = CryptoJS.AES.encrypt(this.portfolio, this.pincode);
 
     console.log(this.name);
-  }
+  };
 }
