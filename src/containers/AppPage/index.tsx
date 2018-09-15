@@ -7,6 +7,7 @@ import { withStyles, withTheme } from "@material-ui/core/styles";
 
 import * as routes from "../../constants/routes";
 import { ApplyPage } from "../ApplyPage";
+import { InterviewerPage } from "../InterviewerPage";
 import LandingPage from "../LandingPage";
 import NotFoundPage from "../NotFoundPage";
 import { ResultPage } from "../ResultPage";
@@ -45,7 +46,7 @@ const App = props => (
           <Route
             exact={true}
             path={routes.INTERVIEWER}
-            component={LandingPage}
+            component={InterviewerPage}
           />
           <Route exact={true} path={routes.RESULT} component={ResultPage} />
           <Route exact={true} path={routes.APPLY} component={ApplyPage} />

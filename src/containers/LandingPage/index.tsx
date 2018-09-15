@@ -141,7 +141,7 @@ const styles = {
     justifyContent: "space-between"
   },
   secondContents: {
-    marginTop: 60
+    marginTop: 120
   },
   contentsPin: {
     width: 248,
