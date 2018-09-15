@@ -22,7 +22,7 @@ export class CheckButton extends React.Component<CheckButtonProps> {
         onClick={this.props.onClick}
         style={Object.assign({}, styles.button, this.props.style)}
       >
-        APPLY NOW
+        Submit
       </Button>
     );
   }

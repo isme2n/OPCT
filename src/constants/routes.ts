@@ -3,3 +3,4 @@ export const HOME = "/home";
 export const APPLY = "/apply";
 export const RESULT = "/result";
 export const INTERVIEWER = "/interviewer";
+export const ADMIN = "/admin";

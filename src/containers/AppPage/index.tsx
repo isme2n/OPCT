@@ -6,6 +6,7 @@ import { compose } from "recompose";
 import { withStyles, withTheme } from "@material-ui/core/styles";
 
 import * as routes from "../../constants/routes";
+import { AdminPage } from "../AdminPage";
 import { ApplyPage } from "../ApplyPage";
 import { InterviewerPage } from "../InterviewerPage";
 import LandingPage from "../LandingPage";
@@ -50,6 +51,7 @@ const App = props => (
           />
           <Route exact={true} path={routes.RESULT} component={ResultPage} />
           <Route exact={true} path={routes.APPLY} component={ApplyPage} />
+          <Route exact={true} path={routes.ADMIN} component={AdminPage} />
           <Route component={NotFoundPage} />
         </Switch>
       </main>

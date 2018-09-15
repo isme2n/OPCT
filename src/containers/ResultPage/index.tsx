@@ -3,11 +3,15 @@ import * as React from "react";
 import { CheckButton } from "./CheckButton";
 
 import { TextField } from "@material-ui/core";
+import MenuItem from "@material-ui/core/MenuItem";
 
 import { action, observable } from "mobx";
 import { inject, observer } from "mobx-react";
 
 import * as BG from "../../images/BG.png";
+import * as NORMAL from "../../images/BG.png";
+// import * as FAILE from "../../images/Blockchain.png";
+// import * as SUCCESS from "../../images/Blockchain.png";
 
 const styles = {
   hero: {
@@ -52,7 +56,7 @@ const styles = {
   },
   content: {
     margin: 10,
-    paddingTop: 50,
+    paddingTop: 20,
     display: "relative",
     width: "100%",
     textAlign: "center" as "center"
@@ -62,8 +66,44 @@ const styles = {
   },
   textField: {
     width: 500
+  },
+
+  resultImg: {
+    width: "500px",
+    height: "230px",
+    marginTop: 30,
+    marginLeft: 590,
+    borderRadius: 30,
+    display: "flex",
+    background:
+      "linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5))",
+    backgroundImage: `url(${BG})`,
+    class: "center"
+  },
+  failImg: {
+    width: "500px",
+    height: "230px",
+    marginTop: 30,
+    marginLeft: 590,
+    borderRadius: 30,
+    display: "flex",
+    background:
+      "linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5))",
+    backgroundImage: `url(${NORMAL})`,
+    class: "center"
   }
 };
+
+const ROUND = [
+  {
+    value: 0,
+    label: "Application Phase"
+  },
+  {
+    value: 1,
+    label: "Interview"
+  }
+];
 
 interface ResultPageProps {
   ethersStore?: any;
@@ -105,15 +145,40 @@ export class ResultPage extends React.Component<ResultPageProps> {
             <TextField
               style={styles.textField}
               label="Check Round"
-              value={this.name}
+              value={this.round}
               onChange={this.changeRound}
-            />
+              select={true}
+            >
+              {ROUND.map(option => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
           </div>
           <CheckButton style={styles.checkButton} onClick={this.getResult} />
+          <div style={this.status()} />
         </div>
       </div>
     );
   }
+
+  //     const ConditionalComponent = ({ loading, data }) => {
+  //         if (loading) {
+  //           return <div style = {styles.resultImg}/>
+  //         } else {
+
+  //         }
+  //       };
+  //   }
+
+  private status = () => {
+    if (this.successorfailure) {
+      return styles.resultImg;
+    } else {
+      return styles.failImg;
+    }
+  };
 
   @action
   private changeAddress = e => {
@@ -128,12 +193,11 @@ export class ResultPage extends React.Component<ResultPageProps> {
   @action
   private getResult = async () => {
     const { opct } = this.props.ethersStore;
-    await opct.GetEvaluate(this.address, this.round).then(
+    await opct.GetConfirmRound(this.address, this.round).then(
       action(res => {
         this.successorfailure = res;
+        console.log(this.successorfailure);
       })
     );
-
-    console.log(this.successorfailure);
   };
 }
