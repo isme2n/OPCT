@@ -88,7 +88,7 @@ const styles = {
   },
   heroContentButton: {
     marginTop: 40,
-    marginLeft: "54%"
+    width: "360px"
   },
   contents: {
     marginTop: 100,

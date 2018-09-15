@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Button, TextField } from "@material-ui/core";
+import { Button, TextField, Typography } from "@material-ui/core";
 
 import { action, observable } from "mobx";
 import { inject, observer } from "mobx-react";
@@ -80,6 +80,8 @@ export class ApplyPage extends React.Component<ApplyPageProps> {
   private pincode;
   @observable
   private portfolio;
+  @observable
+  private isPossible;
 
   public render() {
     return (
@@ -94,54 +96,66 @@ export class ApplyPage extends React.Component<ApplyPageProps> {
         </div>
         <div style={styles.content}>
           <div style={styles.status}>{this.status()}</div>
-          <div>
-            <TextField
-              style={styles.textField}
-              label="name"
-              onChange={this.changeName}
-            />
-          </div>
-          <div>
-            <TextField
-              style={styles.textField}
-              label="birth"
-              onChange={this.changeBirth}
-            />
-          </div>
-          <div>
-            <TextField
-              style={styles.textField}
-              label="pincode"
-              onChange={this.changePincode}
-            />
-          </div>
-          <div>
-            <TextField
-              style={styles.textField}
-              label="portfolio"
-              onChange={this.changePortfolio}
-            />
-          </div>
-          <Button
-            variant="contained"
-            style={styles.button}
-            onClick={this.sendApply}
-          >
-            send
-          </Button>
+          {this.isPossible ? (
+            <div>
+              <div>
+                <TextField
+                  style={styles.textField}
+                  label="name"
+                  onChange={this.changeName}
+                />
+              </div>
+              <div>
+                <TextField
+                  style={styles.textField}
+                  label="birth"
+                  onChange={this.changeBirth}
+                />
+              </div>
+              <div>
+                <TextField
+                  style={styles.textField}
+                  label="pincode"
+                  onChange={this.changePincode}
+                />
+              </div>
+              <div>
+                <TextField
+                  style={styles.textField}
+                  label="portfolio"
+                  onChange={this.changePortfolio}
+                />
+              </div>
+              <Button
+                variant="contained"
+                style={styles.button}
+                onClick={this.sendApply}
+              >
+                send
+              </Button>
+            </div>
+          ) : (
+            <div>
+              <Typography> You can't Apply Now</Typography>
+            </div>
+          )}
         </div>
       </div>
     );
   }
 
+  @action
   private status = () => {
     const { ethersStore } = this.props;
 
     if (!ethersStore.web3) {
+      this.isPossible = false;
       return "no Web3";
     } else if (!(ethersStore.accounts.length > 0)) {
+      this.isPossible = false;
       return "can't detected Accounts. Please Logging into Metamask";
     } else {
+      this.isPossible = true;
       return "";
     }
   };

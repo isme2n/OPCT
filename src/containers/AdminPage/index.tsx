@@ -1,11 +1,13 @@
 import * as React from "react";
 
-import { Button } from "@material-ui/core";
-
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import ListItemText from "@material-ui/core/ListItemText";
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow
+} from "@material-ui/core";
 
 import { action, observable } from "mobx";
 import { inject, observer } from "mobx-react";
@@ -48,24 +50,33 @@ export class AdminPage extends React.Component<AdminPageProps> {
           style={styles.button}
           onClick={this.GetApplicantList}
         >
-          send
-        </Button>
-        <Button
-          variant="contained"
-          style={styles.button}
-          onClick={this.GetApplicantInfo}
-        >
-          Fuck
+          Call Applicants Data
         </Button>
         <div style={styles.content}>
-          <List>
-            {this.ApplicantInfo.map(value => (
-              <ListItem key={value}>
-                <ListItemText primary={`Line item ${value + 1}`} />
-                <ListItemSecondaryAction />
-              </ListItem>
-            ))}
-          </List>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Birth</TableCell>
+                <TableCell>FingerPrint</TableCell>
+                <TableCell>PortfolioLink</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.ApplicantInfo.map((row, index) => {
+                return (
+                  <TableRow key={index}>
+                    <TableCell component="th" scope="row">
+                      {row[0]}
+                    </TableCell>
+                    <TableCell>{row[1]}</TableCell>
+                    <TableCell>{row[2]}</TableCell>
+                    <TableCell>{row[3]}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
         </div>
       </div>
     );
@@ -77,6 +88,7 @@ export class AdminPage extends React.Component<AdminPageProps> {
       await opct.GetApplicantAddress().then(res => {
         ArrayList = res;
         console.log(ArrayList.length);
+        this.GetApplicantInfo();
       });
     } catch (err) {
       alert(err);

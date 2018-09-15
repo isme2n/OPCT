@@ -70,7 +70,7 @@ class EthersStore {
   }
 
   private setOpct = () => {
-    const address = "0xd57c9Bc8Bb17cbD5c385b02F715A497d6f69f324";
+    const address = "0x0fa515488f450dcca11b0ff4a8f6ee50e3443dcc";
 
     this.opct = new ethers.Contract(address, opctAbi, this.signer);
   };

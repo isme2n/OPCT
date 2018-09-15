@@ -134,7 +134,7 @@ export class ResultPage extends React.Component<ResultPageProps> {
   @observable
   private address;
   @observable
-  private round;
+  private round = 0;
   @observable
   private successorfailure;
 

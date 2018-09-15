@@ -2,6 +2,10 @@ import * as React from "react";
 
 import { Button } from "@material-ui/core";
 
+import { NavLink } from "react-router-dom";
+
+import * as routes from "../../constants/routes";
+
 const styles = {
   button: {
     backgroundColor: "#0074e4",
@@ -19,7 +23,12 @@ export class ApplyButton extends React.Component<ApplyButtonProps> {
         variant="contained"
         style={Object.assign({}, styles.button, this.props.style)}
       >
-        APPLY NOW
+        <NavLink
+          style={{ textDecoration: "none", color: "#fff" }}
+          to={routes.APPLY}
+        >
+          APPLY NOW
+        </NavLink>
       </Button>
     );
   }
