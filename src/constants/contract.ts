@@ -42,7 +42,7 @@ export const opctAbi = [
     name: "GetApplicant",
     outputs: [
       { name: "", type: "string" },
-      { name: "", type: "uint32" },
+      { name: "", type: "string" },
       { name: "", type: "string" },
       { name: "", type: "string" }
     ],
@@ -81,7 +81,7 @@ export const opctAbi = [
     constant: false,
     inputs: [
       { name: "_name", type: "string" },
-      { name: "_birth", type: "uint32" },
+      { name: "_birth", type: "string" },
       { name: "_fingerprint", type: "string" },
       { name: "_portfolioURL", type: "string" }
     ],

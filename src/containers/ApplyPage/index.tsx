@@ -95,7 +95,9 @@ export class ApplyPage extends React.Component<ApplyPageProps> {
           </div>
         </div>
         <div style={styles.content}>
-          <div style={styles.status}>{this.status()}</div>
+          <div style={styles.status}>
+            {this.props.ethersStore.accounts ? this.status() : this.status()}
+          </div>
           {this.isPossible ? (
             <div>
               <div>
