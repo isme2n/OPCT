@@ -9,9 +9,8 @@ import { action, observable } from "mobx";
 import { inject, observer } from "mobx-react";
 
 import * as BG from "../../images/BG.png";
-import * as NORMAL from "../../images/BG.png";
-// import * as FAILE from "../../images/Blockchain.png";
-// import * as SUCCESS from "../../images/Blockchain.png";
+import * as FAILE from "../../images/Fail.jpg";
+import * as SUCCESS from "../../images/Hycon.jpg";
 
 const styles = {
   hero: {
@@ -80,16 +79,34 @@ const styles = {
     backgroundImage: `url(${BG})`,
     class: "center"
   },
+
   failImg: {
     width: "500px",
     height: "230px",
     marginTop: 30,
-    marginLeft: 590,
+    marginLeft: 630,
     borderRadius: 30,
     display: "flex",
     background:
       "linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5))",
-    backgroundImage: `url(${NORMAL})`,
+    backgroundImage: `url(${FAILE})`,
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+    class: "center"
+  },
+
+  successImg: {
+    width: "500px",
+    height: "230px",
+    marginTop: 30,
+    marginLeft: 718,
+    borderRadius: 30,
+    display: "flex",
+    background:
+      "linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5))",
+    backgroundImage: `url(${SUCCESS})`,
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
     class: "center"
   }
 };
@@ -163,18 +180,9 @@ export class ResultPage extends React.Component<ResultPageProps> {
     );
   }
 
-  //     const ConditionalComponent = ({ loading, data }) => {
-  //         if (loading) {
-  //           return <div style = {styles.resultImg}/>
-  //         } else {
-
-  //         }
-  //       };
-  //   }
-
   private status = () => {
     if (this.successorfailure) {
-      return styles.resultImg;
+      return styles.successImg;
     } else {
       return styles.failImg;
     }
@@ -187,13 +195,14 @@ export class ResultPage extends React.Component<ResultPageProps> {
 
   @action
   private changeRound = e => {
+    console.log(e);
     this.round = e.target.value;
   };
 
   @action
   private getResult = async () => {
     const { opct } = this.props.ethersStore;
-    await opct.GetConfirmRound(this.address, this.round).then(
+    await opct.GetConfirmRound(this.address, 2).then(
       action(res => {
         this.successorfailure = res;
         console.log(this.successorfailure);

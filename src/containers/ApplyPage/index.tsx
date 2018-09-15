@@ -59,6 +59,9 @@ const styles = {
     margin: 10,
     backgroundColor: "#0074e4",
     color: "#fff"
+  },
+  textField: {
+    width: 500
   }
 };
 
@@ -92,16 +95,32 @@ export class ApplyPage extends React.Component<ApplyPageProps> {
         <div style={styles.content}>
           <div style={styles.status}>{this.status()}</div>
           <div>
-            <TextField label="name" onChange={this.changeName} />
+            <TextField
+              style={styles.textField}
+              label="name"
+              onChange={this.changeName}
+            />
           </div>
           <div>
-            <TextField label="birth" onChange={this.changeBirth} />
+            <TextField
+              style={styles.textField}
+              label="birth"
+              onChange={this.changeBirth}
+            />
           </div>
           <div>
-            <TextField label="pincode" onChange={this.changePincode} />
+            <TextField
+              style={styles.textField}
+              label="pincode"
+              onChange={this.changePincode}
+            />
           </div>
           <div>
-            <TextField label="portfolio" onChange={this.changePortfolio} />
+            <TextField
+              style={styles.textField}
+              label="portfolio"
+              onChange={this.changePortfolio}
+            />
           </div>
           <Button
             variant="contained"
@@ -123,7 +142,7 @@ export class ApplyPage extends React.Component<ApplyPageProps> {
     } else if (!(ethersStore.accounts.length > 0)) {
       return "can't detected Accounts. Please Logging into Metamask";
     } else {
-      return "fine";
+      return "";
     }
   };
 

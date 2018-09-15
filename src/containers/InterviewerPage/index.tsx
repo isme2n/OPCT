@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { Button, TextField } from "@material-ui/core";
+import MenuItem from "@material-ui/core/MenuItem";
 
 import { action, observable } from "mobx";
 import { inject, observer } from "mobx-react";
@@ -59,8 +60,22 @@ const styles = {
     margin: 10,
     backgroundColor: "#0074e4",
     color: "#fff"
+  },
+  textField: {
+    width: 500
   }
 };
+
+const ROUND = [
+  {
+    value: 0,
+    label: "Application Phase"
+  },
+  {
+    value: 1,
+    label: "Interview"
+  }
+];
 
 interface InterviewerPageProps {
   ethersStore?: any;
@@ -75,6 +90,8 @@ export class InterviewerPage extends React.Component<InterviewerPageProps> {
   private score;
   @observable
   private comments;
+  @observable
+  private round;
 
   public render() {
     return (
@@ -90,13 +107,37 @@ export class InterviewerPage extends React.Component<InterviewerPageProps> {
         <div style={styles.content}>
           <div style={styles.status}>{this.status()}</div>
           <div>
-            <TextField label="address" onChange={this.changeAddress} />
-          </div>
-          <div>
-            <TextField label="score" onChange={this.changeScore} />
+            <TextField
+              style={styles.textField}
+              label="address"
+              onChange={this.changeAddress}
+            />
           </div>
           <div>
             <TextField
+              style={styles.textField}
+              label="Check Round"
+              value={this.round}
+              onChange={this.changeRound}
+              select={true}
+            >
+              {ROUND.map(option => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
+          <div>
+            <TextField
+              style={styles.textField}
+              label="score"
+              onChange={this.changeScore}
+            />
+          </div>
+          <div>
+            <TextField
+              style={styles.textField}
               multiline={true}
               rows={6}
               rowsMax={6}
@@ -124,7 +165,7 @@ export class InterviewerPage extends React.Component<InterviewerPageProps> {
     } else if (!(ethersStore.accounts.length > 0)) {
       return "can't detected Accounts. Please Logging into Metamask";
     } else {
-      return "fine";
+      return "";
     }
   };
 
@@ -140,10 +181,15 @@ export class InterviewerPage extends React.Component<InterviewerPageProps> {
   private changeComments = e => {
     this.comments = e.target.value;
   };
+  @action
+  private changeRound = e => {
+    this.round = e.target.value;
+  };
+
   private sendApply = async () => {
     const { opct } = this.props.ethersStore;
 
-    opct.SetEvaluate(this.address, 0, this.score);
+    opct.SetEvaluate(this.address, this.round, this.score);
     console.log(this.address, this.score, this.comments);
   };
 }
