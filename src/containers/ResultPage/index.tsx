@@ -207,7 +207,7 @@ export class ResultPage extends React.Component<ResultPageProps> {
   @action
   private getResult = async () => {
     const { opct } = this.props.ethersStore;
-    await opct.GetConfirmRound(this.address, 2).then(
+    await opct.GetConfirmRound(this.address, this.round).then(
       action(res => {
         this.successorfailure = res;
         console.log(this.successorfailure);
