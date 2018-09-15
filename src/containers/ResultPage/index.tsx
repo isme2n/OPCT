@@ -210,7 +210,6 @@ export class ResultPage extends React.Component<ResultPageProps> {
     await opct.GetConfirmRound(this.address, this.round).then(
       action(res => {
         this.successorfailure = res;
-        console.log(this.successorfailure);
       })
     );
   };
