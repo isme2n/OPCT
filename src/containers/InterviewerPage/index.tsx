@@ -91,7 +91,7 @@ export class InterviewerPage extends React.Component<InterviewerPageProps> {
   @observable
   private comments;
   @observable
-  private round;
+  private round = 0;
 
   public render() {
     return (
